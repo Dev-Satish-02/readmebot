@@ -125,7 +125,7 @@ const generatePrompt = (analysis) => {
   const { isNode, isPython, isRust, isCLI } = metadata.type;
 
   return `
-Generate a professional README.md for this ${isNode ? 'Node.js' : isPython ? 'Python' : isRust ? 'Rust' : 'Software'} project.
+Generate a professional README.md for this ${isNode ? 'Node.js ' : isPython ? 'Python ' : isRust ? 'Rust ' : ''}project.
 
 # Project Metadata
 - Name: ${metadata.name}
@@ -140,7 +140,7 @@ ${structure.map(item =>
 ).join('\n')}
 
 # Required Sections
-1. Project Title with badges
+1. Project Title
 2. Description (expand on features)
 3. ${isNode ? 'npm Installation' : isPython ? 'pip Installation' : 'Installation'}
 4. Usage Examples
@@ -153,7 +153,6 @@ Format using GitHub Flavored Markdown with:
 - Proper headings hierarchy
 - Code blocks for examples
 - Tables for CLI commands if applicable
-- Badges for version, license, etc.
 `;
 };
 

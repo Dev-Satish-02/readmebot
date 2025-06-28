@@ -1,6 +1,6 @@
 # readmebot
 
-Generate professional, AI-powered README files for your Node.js projects.
+Generate professional, AI-powered README files for your projects.
 
 ---
 
@@ -35,98 +35,27 @@ npm install --save-dev readmebot
 
 ## Usage Examples
 
-After installation, you can use **readmebot** from the command line:
+After installation, you can use **readmebot** from the command line if .env file contains github_token:
 
 ```bash
 readmebot
 ```
 
-Generate a README.md for your current directory:
+You can use **readmebot** from the command line by using your own github_token:
 
 ```bash
-readmebot
+readmebot --key API_KEY
 ```
 
-Specify a target directory:
+Please obtain github_token for openai/gpt-4.1 from here https://github.com/marketplace/models
 
-```bash
-readmebot ./my-project
-```
-
-Customize output filename:
-
-```bash
-readmebot --output CUSTOM_README.md
-```
 
 ### CLI Commands
 
-| Command / Option        | Description                                 |
-|------------------------|---------------------------------------------|
-| `readmebot`            | Generate README.md in the current directory |
-| `readmebot <path>`     | Generate README.md for the specified path   |
-| `--output <filename>`  | Specify custom output filename              |
-| `--help`               | Show help and usage information             |
-
----
-
-## API Reference
-
-If using **readmebot** programmatically:
-
-```js
-const readmebot = require('readmebot');
-
-readmebot.generate({
-  path: './my-project',
-  output: 'README.md'
-});
-```
-
-#### Methods
-
-| Method         | Parameters                   | Description                                  |
-|----------------|-----------------------------|----------------------------------------------|
-| `generate`     | `{ path, output }`          | Generates README for a directory             |
-
-- **path**: *string* - Directory to analyze. Defaults to current directory.
-- **output**: *string* - Output filename. Defaults to `README.md`.
-
----
-
-## Configuration
-
-**readmebot** works out-of-the-box, but you can provide a config file (`readmebot.config.js` or `.readmebotrc`) in your project root to customize:
-
-```js
-module.exports = {
-  title: "My Custom Project Title",
-  sections: ["Description", "Installation", "Usage", "API Reference", "License"],
-  output: "CUSTOM_README.md"
-};
-```
-
-#### Supported Options
-
-| Option      | Type     | Description                                  |
-|-------------|----------|----------------------------------------------|
-| `title`     | string   | Custom project title                         |
-| `sections`  | array    | Sections to include in the README            |
-| `output`    | string   | Output filename for the generated README     |
-
----
-
-## Contributing Guidelines
-
-We welcome contributions! To get started:
-
-1. Fork this repository
-2. Create your feature branch: `git checkout -b feature/my-feature`
-3. Commit your changes: `git commit -m 'Add my feature'`
-4. Push to the branch: `git push origin feature/my-feature`
-5. Open a pull request
-
-Please follow the [Contributor Covenant](https://www.contributor-covenant.org/) code of conduct.
+| Command / Option         | Description                                 |
+|--------------------------|---------------------------------------------|
+| `readmebot`              | Generate README.md in the current directory |
+| `readmebot --key API_KEY`| Generate README.md for the specified path   |
 
 ---
 

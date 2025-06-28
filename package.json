@@ -1,6 +1,6 @@
 {
   "name": "readmebot",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "Generate Readme using AI",
   "main": "index.js",
   "type": "module",
@@ -15,7 +15,7 @@
     "url": "git+https://github.com/Dev-Satish-02/readmebot.git"
   },
   "keywords": [
-    "Readme"
+    "readme", "readmebot", "full stack"
   ],
   "author": "Dev Satish",
   "license": "ISC",

@@ -1,112 +1,59 @@
-# readmebot
+# 📄 readmebot
 
-Generate professional README.md files for your projects using AI.
-
-[![npm version](https://img.shields.io/npm/v/readmebot.svg)](https://www.npmjs.com/package/readmebot)
-[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](LICENSE)
-[![Issues](https://img.shields.io/github/issues/Dev-Satish-02/readmebot)](https://github.com/Dev-Satish-02/readmebot/issues)
+Generate beautiful, professional README files effortlessly using AI.
 
 ---
 
-## Description
+## ✨ Description
 
-**readmebot** is a command-line tool that helps you generate high-quality README.md files for your projects using AI. By leveraging Azure AI services, readmebot streamlines the documentation process, ensuring your repositories have clear, concise, and professional READMEs with minimal effort.
-
----
-
-## Features
-
-- ✨ **AI-powered README generation**  
-  Generate professional README.md files tailored to your project.
-
-- ⚡ **Easy-to-use CLI**  
-  Generate READMEs directly from your terminal with a single command.
-
-- 🛠️ **Customizable**  
-  Fine-tune the generated README to fit your project's unique requirements.
-
-- 🔒 **Environment configuration support**  
-  Use `.env` files to securely manage your API keys and configuration.
+**readmebot** is an AI-powered tool that helps you instantly create high-quality README.md files for your projects. With just a few prompts, readmebot crafts well-structured, professional documentation, saving you time and ensuring your projects make a great first impression.
 
 ---
 
-## Installation
-
-To install **readmebot** globally using [npm](https://www.npmjs.com/):
+## 🚀 Installation
 
 ```bash
-npm install -g readmebot
+# Clone the repository
+git clone https://github.com/yourusername/readmebot.git
+cd readmebot
+
+# Install dependencies
+npm install
 ```
 
-Or use it as a local project dependency:
-
-```bash
-npm install readmebot
-```
+> **Note:** Make sure you have [Node.js](https://nodejs.org/) installed.
 
 ---
 
-## Usage
+## ⚡ Usage
 
-After installation, use the `readmebot` command in your terminal:
+1. **Configure Environment:**
+   - Create a `.env` file in the project root to store your API keys and other configurations.
 
-```bash
-readmebot
-```
+2. **Run readmebot:**
 
-By default, readmebot will prompt you for information about your project and generate a `README.md` file in your current directory.
+   ```bash
+   node index.js
+   ```
 
-### Configuration
-
-**readmebot** requires access to Azure AI services. You must provide your Azure API credentials via a `.env` file in your project root:
-
-```env
-AZURE_API_KEY=your_azure_api_key
-AZURE_ENDPOINT=your_azure_endpoint
-```
-
-> **Note:** For detailed setup instructions, refer to the [official documentation](https://github.com/Dev-Satish-02/readmebot#readme) or open an [issue](https://github.com/Dev-Satish-02/readmebot/issues) for support.
+   Follow the prompts, and let the AI generate a README.md tailored for your project.
 
 ---
 
-## Example
+## 🌟 Features
 
-```bash
-$ readmebot
-? Project Name: my-awesome-app
-? Description: An app that does awesome things
-? Author: Jane Doe
-...
-README.md generated successfully!
-```
+- 📝 **AI-Generated Content:** Creates professional README files with minimal input
+- ⚡ **Fast & Easy:** Generate docs in seconds
+- 🎨 **Beautiful Design:** Clean, modern markdown formatting
+- 🔒 **Secure:** Manages API keys via environment variables
+- 🔌 **Extensible:** Easily integrate with more AI providers
 
 ---
 
-## License
+## 📄 License
 
-This project is licensed under the [ISC License](LICENSE).
-
----
-
-## Contributing
-
-Contributions, issues and feature requests are welcome!  
-Feel free to check the [issues page](https://github.com/Dev-Satish-02/readmebot/issues).
+This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-## Author
-
-Developed by [Dev Satish](https://github.com/Dev-Satish-02).
-
----
-
-## Links
-
-- [GitHub Repository](https://github.com/Dev-Satish-02/readmebot)
-- [Report Issues](https://github.com/Dev-Satish-02/readmebot/issues)
-- [NPM Package](https://www.npmjs.com/package/readmebot)
-
----
-
-> _Generate professional README.md files for your projects in seconds!_
+> **Made with ❤️ by the readmebot team.**

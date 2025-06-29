@@ -47,8 +47,7 @@ You can use **readmebot** from the command line by using your own github_token:
 readmebot --key API_KEY
 ```
 
-Please obtain github_token for openai/gpt-4.1 from here https://github.com/marketplace/models
-
+Please obtain github_token for openai/gpt-4.1 from here: [token](https://github.com/marketplace/models/azure-openai/gpt-4-1/playground)
 
 ### CLI Commands
 
@@ -64,5 +63,6 @@ Please obtain github_token for openai/gpt-4.1 from here https://github.com/marke
 This project is licensed under the [MIT License](LICENSE).
 
 ---
+
 
 **readmebot** © 2024. All rights reserved.

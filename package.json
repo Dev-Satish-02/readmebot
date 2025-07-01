@@ -1,7 +1,7 @@
 {
   "name": "readmebot",
-  "version": "1.0.5",
-  "description": "Generate Readme using AI",
+  "version": "1.0.6",
+  "description": "AI-powered README generator for projects. Automatically creates beautiful, structured documentation for Node.js, Python, React, and more.",
   "main": "index.js",
   "type": "module",
   "bin": {
@@ -17,6 +17,15 @@
   "keywords": [
     "readme",
     "readmebot",
+    "documentation",
+    "github-readme",
+    "automated-docs",
+    "nodejs",
+    "python",
+    "react",
+    "cli-tool",
+    "developer-tools",
+    "markdown-generator",
     "full stack"
   ],
   "author": "Dev Satish",

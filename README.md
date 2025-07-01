@@ -1,3 +1,9 @@
+<!--
+<meta property="og:title" content="readmebot - AI README Generator">
+<meta property="og:description" content="Automatically generate beautiful README for Node.js/Python/React projects">
+<meta property="og:url" content="https://github.com/Dev-Satish-02/readmebot">
+-->
+
 # readmebot
 
 Generate professional, AI-powered README files for your projects.

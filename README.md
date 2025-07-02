@@ -1,14 +1,16 @@
-<!--
-<meta property="og:title" content="readmebot - AI README Generator">
-<meta property="og:description" content="Automatically generate beautiful README for Node.js/Python/React projects">
-<meta property="og:url" content="https://github.com/Dev-Satish-02/readmebot">
--->
+<div align="center">
+  <h1 align="center" style="font-size: 2.5em; margin-bottom: 0.5em;">
+    <img src="https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/ec559a9f6bfd399b82bb44393651661b08aaf7ba/icons/folder-markdown-open.svg" width="100" />
+    <br>READMEBOT
+  </h1>
+  <div align="center" style="margin: 1.5em 0;">
+    <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
+    <img src="https://img.shields.io/github/license/Dev-Satish-02/readmebot?style=for-the-badge&color=blue" alt="License" />
+    <img src="https://img.shields.io/github/last-commit/Dev-Satish-02/readmebot?style=for-the-badge" alt="Last Commit" />
+    <img src="https://img.shields.io/npm/v/readmebot?style=for-the-badge" alt="npm version" />
+  </div>
+</div>
 
-# readmebot
-
-Generate professional, AI-powered README files for your projects.
-
----
 
 ## Description
 

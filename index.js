@@ -21,11 +21,11 @@ const CONFIG = {
   IGNORE_DIRS: new Set(['node_modules', '.git', 'dist', 'build', 'coverage', '__pycache__', 'venv']),
   IGNORE_FILES: new Set(['.DS_Store', 'Thumbs.db']),
   SOURCE_EXTS: new Set([
-    '.js', '.ts', '.jsx', '.tsx', '.mjs', '.py', '.rb', '.php', 
+    '.js', '.ts', '.jsx', '.tsx', '.mjs', '.py', '.rb', '.php',
     '.java', '.go', '.rs', '.c', '.cpp', '.h', '.sh', '.ino'
   ]),
   TEMPLATE_PARAMS: {
-    max_tokens: 2000,
+    max_tokens: 3000,
     temperature: 0.7
   }
 };
@@ -112,8 +112,8 @@ const detectProjectType = (structure) => {
     isNode: extensions.has('.js') || extensions.has('.mjs'),
     isPython: extensions.has('.py'),
     isRust: extensions.has('.rs'),
-    isCLI: structure.some(item => 
-      item.name === 'cli.js' || 
+    isCLI: structure.some(item =>
+      item.name === 'cli.js' ||
       item.name === 'main.py' ||
       item.path.includes('bin/')
     )
@@ -122,45 +122,150 @@ const detectProjectType = (structure) => {
 
 const generatePrompt = (analysis) => {
   const { metadata, structure } = analysis;
-  const { isNode, isPython, isRust, isCLI } = metadata.type;
+  const projectName = metadata.name || 'Project';
+  const description = metadata.description || 'A well-documented project';
+  const repoName = metadata.repository?.url?.split('/').pop()?.replace('.git', '') || 'repository-name';
+  const userName = metadata.repository?.url?.split('/').slice(-2, -1)[0] || 'username';
+
+  // Detect all technologies used
+  const techStack = detectTechnologies(structure);
 
   return `
-Generate a professional README.md for this ${isNode ? 'Node.js ' : isPython ? 'Python ' : isRust ? 'Rust ' : ''}project.
+Generate a professional README.md with this exact structure:
 
-# Project Metadata
-- Name: ${metadata.name}
-- Version: ${metadata.version}
-- Description: ${metadata.description || 'No description provided'}
+<div align="center">
+  <h1 align="center" style="font-size: 2.5em; margin-bottom: 0.5em;">
+    <img src="https://raw.githubusercontent.com/PKief/vscode-material-icon-theme/ec559a9f6bfd399b82bb44393651661b08aaf7ba/icons/folder-markdown-open.svg" width="100" />
+    <br>${projectName.toUpperCase()}
+  </h1>
+  <h3 align="center" style="font-size: 1.2em; margin-top: 0;">${description}</h3>
+  
+  <div align="center" style="margin: 1.5em 0;">
+    ${techStack.map(tech => {
+      const badgeUrl = getTechBadgeUrl(tech);
+      return `<img src="${badgeUrl}" alt="${tech}" />`;
+    }).join('\n    ')}
+  </div>
+  
+  <div align="center" style="margin: 1.5em 0;">
+    <img src="https://img.shields.io/github/license/${userName}/${repoName}?style=for-the-badge&color=blue" alt="License" />
+    <img src="https://img.shields.io/github/last-commit/${userName}/${repoName}?style=for-the-badge" alt="Last Commit" />
+    <img src="https://img.shields.io/npm/v/${repoName}?style=for-the-badge" alt="npm version" />
+  </div>
+</div>
 
 # Detected Structure
-${structure.map(item => 
-  item.type === 'directory' ? 
-    `📂 ${item.path}/ (${item.contents.length} files)` :
-    `📄 ${item.path}`
-).join('\n')}
+${generateStructureTree(structure)}
 
 # Required Sections
-1. Project Title
-2. Description (expand on features)
-3. ${isNode ? 'npm Installation' : isPython ? 'pip Installation' : 'Installation'}
-4. Usage Examples
-5. ${isCLI ? 'Command Reference' : 'API Reference'}
-6. Configuration
-7. Contributing Guidelines
-8. License
+1. Detected Structure
+2. Installation (using npm or pip after cloning the repository)
+3. Contributing Guidelines (not compulary)
+4. License (if present)
 
 Format using GitHub Flavored Markdown with:
 - Proper headings hierarchy
 - Code blocks for examples
 - Tables for CLI commands if applicable
 `;
+
+    function getRepoInfo(pkg) {
+    try {
+      if (pkg.repository) {
+        const repoStr = typeof pkg.repository === 'string' ? pkg.repository : pkg.repository.url;
+        const match = repoStr.match(/github\.com[/:]([^/]+)\/([^/]+?)(\.git)?$/);
+        if (match) return { user: match[1], repo: match[2] };
+      }
+    } catch (e) {
+      console.log(chalk.yellow('⚠ Could not parse repository URL'));
+    }
+    return { user: 'username', repo: 'repository' };
+  }
+
+  // Helper function to detect all technologies used
+  function detectTechnologies(structure) {
+    const extensions = new Set();
+    const techStack = new Set();
+
+    // Scan all files for extensions
+    structure.forEach(item => {
+      if (item.type === 'file') extensions.add(item.ext);
+      if (item.type === 'directory') {
+        item.contents.forEach(file => extensions.add(file.ext));
+      }
+    });
+
+    // Map extensions to technologies
+    const techMap = {
+      '.js': 'JavaScript',
+      '.ts': 'TypeScript',
+      '.jsx': 'React',
+      '.tsx': 'TypeScript',
+      '.py': 'Python',
+      '.rb': 'Ruby',
+      '.java': 'Java',
+      '.go': 'Go',
+      '.rs': 'Rust',
+      '.php': 'PHP',
+      '.sh': 'Bash'
+    };
+
+    extensions.forEach(ext => {
+      if (techMap[ext]) techStack.add(techMap[ext]);
+    });
+
+    return Array.from(techStack);
+  }
+
+  // Helper function to generate badges for all detected technologies
+  function getTechBadgeUrl(tech) {
+    const badgeMap = {
+      'JavaScript': 'https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black',
+      'TypeScript': 'https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white',
+      'Python': 'https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white',
+      'React': 'https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black',
+      'Ruby': 'https://img.shields.io/badge/Ruby-CC342D?style=for-the-badge&logo=ruby&logoColor=white',
+      'Java': 'https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white',
+      'Go': 'https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white',
+      'Rust': 'https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white',
+      'PHP': 'https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white',
+      'Bash': 'https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnubash&logoColor=white'
+    };
+    return badgeMap[tech] || '';
+  }
+
+
+  // Helper function to generate directory tree
+  function generateStructureTree(structure, depth = 0, prefix = '') {
+    let tree = '';
+    const lastIndex = structure.length - 1;
+    const indent = depth > 0 ? '│   '.repeat(depth - 1) : '';
+    
+    structure.forEach((item, index) => {
+      const isLast = index === lastIndex;
+      const pointer = isLast ? '└── ' : '├── ';
+      
+      if (item.type === 'directory') {
+        tree += `${indent}${prefix}${pointer}📂 ${item.name}/\n`;
+        tree += generateStructureTree(
+          item.contents, 
+          depth + 1, 
+          isLast ? '    ' : '│   '
+        );
+      } else {
+        tree += `${indent}${prefix}${pointer}📄 ${item.name}\n`;
+      }
+    });
+    
+    return tree;
+  }
 };
 
 // --- Main Execution ---
 (async () => {
   try {
     console.log(chalk.cyan('Analyzing project...'));
-    
+
     const apiToken = getApiToken();
     const pkg = readPackageJson();
     const structure = scanDirectory();
@@ -176,17 +281,17 @@ Format using GitHub Flavored Markdown with:
 
     console.log(chalk.cyan('📄 Generating README...'));
     const client = ModelClient(CONFIG.ENDPOINT, new AzureKeyCredential(apiToken));
-    
+
     const response = await client.path('/chat/completions').post({
       body: {
         messages: [
-          { 
-            role: 'system', 
-            content: 'You are a senior developer that creates perfect READMEs by analyzing project structure. Be concise but thorough.' 
+          {
+            role: 'system',
+            content: 'You are a senior developer that creates perfect READMEs by analyzing project structure. Be concise but thorough.'
           },
-          { 
-            role: 'user', 
-            content: generatePrompt(analysis) 
+          {
+            role: 'user',
+            content: generatePrompt(analysis)
           }
         ],
         model: CONFIG.MODEL,
@@ -200,9 +305,9 @@ Format using GitHub Flavored Markdown with:
 
     const readmeContent = response.body.choices[0].message.content;
     fs.writeFileSync('README.md', readmeContent.trim());
-    
+
     console.log(chalk.green('✔ README.md generated successfully!'));
-    console.log(chalk.blue('Detected:'), 
+    console.log(chalk.blue('Detected:'),
       Object.entries(projectType)
         .filter(([_, value]) => value)
         .map(([key]) => key.replace('is', ''))
